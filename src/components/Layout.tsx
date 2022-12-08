@@ -1,35 +1,15 @@
-import React, { Dispatch, ReactNode, SetStateAction } from "react";
-import Titlebar from './Titlebar';
-import StickyNoteTitle from "./StickyNoteTitle";
+import Titlebar from './Titlebar'
 
 type Props = {
-   children: ReactNode,
-   stickyNote: boolean,
-   previewNote: boolean,
-   setPreviewNote: Dispatch<SetStateAction<boolean>>,
-   windowId: number | undefined,
-   windowName: string,
-   windowData: string
+	children: React.ReactNode
 }
 
-
-const Layout = ({ children, stickyNote, previewNote, setPreviewNote, windowId, windowName, windowData }: Props) => {
-   return (
-      <>
-         {stickyNote ?
-            <StickyNoteTitle
-               previewNote={previewNote}
-               setPreviewNote={setPreviewNote}
-               windowId={windowId}
-               windowName={windowName}
-               windowData={windowData}
-            />
-            :
-            <Titlebar />
-         }
-         <main>{children}</main>
-      </>
-
-   )
+const Layout = ({ children }: Props) => {
+	return (
+		<>
+			<Titlebar />
+			<main>{children}</main>
+		</>
+	)
 }
-export default Layout;
+export default Layout
