@@ -1,5 +1,11 @@
 // Hooks and types/interfaces
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import {
+	Routes,
+	Route,
+	BrowserRouter,
+	RouterProvider,
+	createBrowserRouter,
+} from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { IDirData } from '../interfaces'
 import { useAwaitPoll } from '../functions'
@@ -24,52 +30,27 @@ const App = () => {
 	// Shorthand definitions
 	const currentNote = dirFiles[0]?.find((file) => file.id === currentNoteId)!
 
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			element: <LandingPage />,
+		},
+		{
+			path: '/home',
+			element: <HomePage />,
+		},
+		{
+			path: '/note/:id',
+			element: <NotePage />,
+		},
+	])
+
 	return (
-		<BrowserRouter>
-			<ChakraProvider>
-				<Layout>
-					<Routes>
-						<Route
-							path='/'
-							element={
-								<LandingPage
-									dirName={dirName}
-									hasInitDir={hasInitDir}
-									setDirName={setDirName}
-								/>
-							}
-						/>
-						<Route
-							path='/home'
-							element={
-								<HomePage
-									dirName={dirName}
-									dirFiles={dirFiles[0]}
-									dirFolders={dirFolders[0]}
-									setDirName={setDirName}
-									setCurrentNoteId={setCurrentNoteId}
-									hasInitDir={hasInitDir}
-									processFiles={processFiles}
-									setDirFiles={setDirFiles}
-								/>
-							}
-						/>
-						<Route
-							path='/note/:id'
-							element={
-								<NotePage
-									dirName={dirName}
-									noteData={currentNote}
-									setDirName={setDirName}
-									processFiles={processFiles}
-									setCurrentNoteId={setCurrentNoteId}
-								/>
-							}
-						/>
-					</Routes>
-				</Layout>
-			</ChakraProvider>
-		</BrowserRouter>
+		<ChakraProvider resetCSS={true}>
+			<Layout>
+				<RouterProvider router={router} />
+			</Layout>
+		</ChakraProvider>
 	)
 }
 
